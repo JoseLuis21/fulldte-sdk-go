@@ -3,16 +3,16 @@ package application
 import (
 	"context"
 
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/domain"
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/ports"
+	"github.com/JoseLuis21/integradte-sdk-go/domain"
+	"github.com/JoseLuis21/integradte-sdk-go/ports"
 )
 
 // Service is the application layer orchestrating use-cases.
 type Service struct {
-	api ports.IntegraFacturacionAPI
+	api ports.IntegraDTEAPI
 }
 
-func NewService(api ports.IntegraFacturacionAPI) *Service {
+func NewService(api ports.IntegraDTEAPI) *Service {
 	return &Service{api: api}
 }
 

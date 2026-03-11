@@ -12,12 +12,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/domain"
+	"github.com/JoseLuis21/integradte-sdk-go/domain"
 )
 
 const (
 	// DefaultBaseURL is the production API host.
-	DefaultBaseURL = "https://api.integrafacturacion.cl"
+	DefaultBaseURL = "https://api.integradte.cl"
 	defaultTimeout = 30 * time.Second
 )
 
@@ -36,7 +36,7 @@ type APIError struct {
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("integrafacturacion: status=%d body=%s", e.StatusCode, e.Body)
+	return fmt.Sprintf("integradte: status=%d body=%s", e.StatusCode, e.Body)
 }
 
 // Client is an HTTP adapter implementing the outbound port.
@@ -50,7 +50,7 @@ type Client struct {
 // New creates a new HTTP adapter client.
 func New(cfg Config) (*Client, error) {
 	if strings.TrimSpace(cfg.APIKey) == "" {
-		return nil, fmt.Errorf("integrafacturacion: API key is required")
+		return nil, fmt.Errorf("integradte: API key is required")
 	}
 
 	base := cfg.BaseURL
@@ -60,7 +60,7 @@ func New(cfg Config) (*Client, error) {
 
 	parsedBase, err := url.Parse(base)
 	if err != nil {
-		return nil, fmt.Errorf("integrafacturacion: invalid base URL: %w", err)
+		return nil, fmt.Errorf("integradte: invalid base URL: %w", err)
 	}
 
 	httpClient := cfg.HTTPClient
@@ -70,7 +70,7 @@ func New(cfg Config) (*Client, error) {
 
 	userAgent := strings.TrimSpace(cfg.UserAgent)
 	if userAgent == "" {
-		userAgent = "integrafacturacion-sdk-go/0.2.0"
+		userAgent = "integradte-sdk-go/0.2.0"
 	}
 
 	return &Client{
@@ -100,14 +100,14 @@ func (c *Client) doJSON(
 	if body != nil {
 		raw, err := json.Marshal(body)
 		if err != nil {
-			return nil, fmt.Errorf("integrafacturacion: marshal request: %w", err)
+			return nil, fmt.Errorf("integradte: marshal request: %w", err)
 		}
 		payload = bytes.NewBuffer(raw)
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, c.buildURL(route, query), payload)
 	if err != nil {
-		return nil, fmt.Errorf("integrafacturacion: create request: %w", err)
+		return nil, fmt.Errorf("integradte: create request: %w", err)
 	}
 
 	req.Header.Set("x-api-key", c.apiKey)
@@ -126,13 +126,13 @@ func (c *Client) doJSON(
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("integrafacturacion: do request: %w", err)
+		return nil, fmt.Errorf("integradte: do request: %w", err)
 	}
 	defer resp.Body.Close()
 
 	rawResp, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("integrafacturacion: read response: %w", err)
+		return nil, fmt.Errorf("integradte: read response: %w", err)
 	}
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
@@ -145,7 +145,7 @@ func (c *Client) doJSON(
 
 	var out domain.APIResponse
 	if err := json.Unmarshal(rawResp, &out); err != nil {
-		return nil, fmt.Errorf("integrafacturacion: decode response: %w", err)
+		return nil, fmt.Errorf("integradte: decode response: %w", err)
 	}
 
 	return out, nil

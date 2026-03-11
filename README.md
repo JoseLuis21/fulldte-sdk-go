@@ -1,17 +1,17 @@
-# integrafacturacion-sdk-go
+# integradte-sdk-go
 
-SDK en Go para consumir la API de [IntegraFacturacion](https://api.integrafacturacion.cl), con arquitectura hexagonal.
+SDK en Go para consumir la API de [IntegraDTE](https://api.integradte.cl), con arquitectura hexagonal.
 
 ## Instalacion
 
 ```bash
-go get github.com/JoseLuis21/integrafacturacion-sdk-go
+go get github.com/JoseLuis21/integradte-sdk-go
 ```
 
 Para instalar una version especifica:
 
 ```bash
-go get github.com/JoseLuis21/integrafacturacion-sdk-go@v0.1.0
+go get github.com/JoseLuis21/integradte-sdk-go@v0.1.0
 ```
 
 ## Estructura hexagonal
@@ -19,7 +19,7 @@ go get github.com/JoseLuis21/integrafacturacion-sdk-go@v0.1.0
 - `domain`: modelos de negocio (requests/responses)
 - `ports`: puertos (interfaces)
 - `application`: casos de uso
-- `adapters/httpintegra`: adaptador HTTP concreto para IntegraFacturacion
+- `adapters/httpintegra`: adaptador HTTP concreto para IntegraDTE
 
 ## Uso recomendado (hexagonal)
 
@@ -30,15 +30,15 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/adapters/httpintegra"
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/application"
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/domain"
+	"github.com/JoseLuis21/integradte-sdk-go/adapters/httpintegra"
+	"github.com/JoseLuis21/integradte-sdk-go/application"
+	"github.com/JoseLuis21/integradte-sdk-go/domain"
 )
 
 func main() {
 	adapter, err := httpintegra.New(httpintegra.Config{
 		APIKey: "TU_X_API_KEY",
-		// BaseURL: "https://api.integrafacturacion.cl", // opcional
+		// BaseURL: "https://api.integradte.cl", // opcional
 	})
 	if err != nil {
 		panic(err)

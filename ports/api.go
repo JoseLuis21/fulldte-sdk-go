@@ -3,11 +3,11 @@ package ports
 import (
 	"context"
 
-	"github.com/JoseLuis21/integrafacturacion-sdk-go/domain"
+	"github.com/JoseLuis21/integradte-sdk-go/domain"
 )
 
-// IntegraFacturacionAPI defines the outbound port.
-type IntegraFacturacionAPI interface {
+// IntegraDTEAPI defines the outbound port.
+type IntegraDTEAPI interface {
 	CreateDocument(ctx context.Context, req domain.CreateDocumentRequest) (domain.APIResponse, error)
 	GetDocument(ctx context.Context, id string) (domain.APIResponse, error)
 	GetDocumentStats(ctx context.Context) (domain.APIResponse, error)
